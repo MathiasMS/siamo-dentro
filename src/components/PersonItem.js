@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import ReactCountryFlag from 'react-country-flag';
 import WomanIcon from '@mui/icons-material/Woman';
 import ManIcon from '@mui/icons-material/Man';
@@ -27,8 +27,6 @@ const GenderIcon = ({ gender }) => (
 
 const PersonItem = ({ person, status, offSpringOfOldestWoman, handleEdit }) => {
     const { name, year, country, gender } = person
-    const materialTheme = useTheme();
-    const matchDownMD = useMediaQuery(materialTheme.breakpoints.down('md'));
 
      return (
         <Box sx={{
