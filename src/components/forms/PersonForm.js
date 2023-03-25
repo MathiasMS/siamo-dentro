@@ -88,7 +88,7 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
             </Grid>
             <DialogActions>
                 <Button onClick={handleClose}>Cancelar</Button>
-                <Button variant="contained" disabled={isSubmitting} type="submit">{isSubmitting ? 'Agregando..' : 'Agregar'}</Button>
+                <Button variant="contained" disabled={isSubmitting} type="submit">{Object.keys(defaultValues).length === 0 ? 'Agregar' : 'Editar'}</Button>
             </DialogActions>
         </form>
     )

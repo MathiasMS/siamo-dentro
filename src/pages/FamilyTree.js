@@ -33,7 +33,7 @@ const FamilyTree = () => {
     const [creationOpen, setCreationOpen] = useState(false);
     const [editionOpen, setEditionOpen] = useState(false);
     const [personToEdit, setPersonToEdit] = useState({});
-    const [checkStatus, setCheckStatus] = useState(null );
+    const [checkStatus, setCheckStatus] = useState({} );
 
     const handleCreationOpen = () => {
         setCreationOpen(true);
@@ -136,7 +136,7 @@ const FamilyTree = () => {
                 </Box>
                 <Box sx={{ width: matchDownMD ? '100%' : '50%' }}>
                     {
-                        checkStatus === null ?  (
+                        Object.keys(checkStatus).length === 0 ?  (
                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, px: 1 }}>
                                 <Box sx={{
                                     fontFamily: 'Roboto',

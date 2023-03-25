@@ -432,7 +432,7 @@ const countries = [
         "label": "Islandia"
     },
     {
-        "valuealo": "IT",
+        "value": "IT",
         "label": "Italia"
     },
     {
@@ -989,4 +989,6 @@ const countries = [
     }
 ];
 
-export default countries;
+const sortedCountries = countries.sort((a, b) => (a.label.localeCompare(b.label)));
+
+export default sortedCountries;
