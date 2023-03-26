@@ -32,10 +32,6 @@ const countries = [
         "label": "Antártida"
     },
     {
-        "value": "AR",
-        "label": "Argentina"
-    },
-    {
         "value": "AS",
         "label": "Samoa Americana"
     },
@@ -430,10 +426,6 @@ const countries = [
     {
         "value": "IS",
         "label": "Islandia"
-    },
-    {
-        "value": "IT",
-        "label": "Italia"
     },
     {
         "value": "JE",
@@ -989,6 +981,16 @@ const countries = [
     }
 ];
 
-const sortedCountries = countries.sort((a, b) => (a.label.localeCompare(b.label)));
+export const principalCountries = [
+    {
+        "value": "AR",
+        "label": "Argentina"
+    },
+    {
+        "value": "IT",
+        "label": "Italia"
+    },
+]
 
-export default sortedCountries;
+export const otherCountries = countries.sort((a, b) => (a.label.localeCompare(b.label)));
+

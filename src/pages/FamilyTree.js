@@ -1,28 +1,30 @@
+import React, { useState } from 'react';
 import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { toast } from 'react-toastify';
 import logo from '../logo.svg';
 import theme from '../theme';
 import ConditionalRender from '../components/ConditionalRender';
-import AddIcon from '@mui/icons-material/Add';
 import ArrowDown from '../icons/ArrowDown';
 import PersonItem from '../components/PersonItem';
 import AddPerson from '../components/dialogs/AddPerson';
 import EditPerson from '../components/dialogs/EditPerson';
-import React, { useState } from 'react';
 import StatusText from '../components/StatusText';
 
-const buttonLabels = ['Armar árbol ahora', 'Agregar madre o padre', 'Agregar abuela o abuelo', 'Agregar bisabuela o bisabuelo'];
+const buttonLabels = ['Armar árbol ahora', 'Agregar madre o padre', 'Agregar abuela o abuelo', 'Agregar bisabuela o bisabuelo', 'Agregar tatarabuela o tatarabuelo'];
 
-const dialogsTitles = ['Empezá por vos', 'Agregá madre o padre', 'Agregá abuela o abuelo', 'Agregá bisabuela o bisabuelo'];
+const dialogsTitles = ['Empezá por vos', 'Agregá madre o padre', 'Agregá abuela o abuelo', 'Agregá bisabuela o bisabuelo', 'Agregar tatarabuela o tatarabuelo'];
 
-const relativesLabels = ['', 'Madre o Padre', 'Abuela o Abuelo', 'Bisabuela o Bisabuelo'];
+const relativesLabels = ['', 'Madre o Padre', 'Abuela o Abuelo', 'Bisabuela o Bisabuelo', 'tatarabuela o tatarabuelo'];
 
-const kindOfRelationShip = ['Hijos', 'Padres', 'Abuelos', 'Bisabuelos'];
+const kindOfRelationShip = ['Hijos', 'Padres', 'Abuelos', 'Bisabuelos', 'Tatarabuelos'];
 
 const offSpring = {
     'Hijos': null,
     'Padres': 'Hijos',
     'Abuelos': 'Padres',
-    'Bisabuelos': 'Abuelos'
+    'Bisabuelos': 'Abuelos',
+    'Tatarabuelos': 'Bisabuelos',
 }
 
 const FamilyTree = () => {
@@ -63,7 +65,7 @@ const FamilyTree = () => {
         const index = updatedListOfPersons.findIndex(p => p.id === personToUpdate.id);
 
         if (index === -1) {
-            throw new Error(`Person with ID ${personToUpdate.id} not found in list.`);
+            toast.error(`Person with ID ${personToUpdate.id} not found in list.`);
         }
 
         updatedListOfPersons[index] = personToUpdate;
@@ -73,7 +75,7 @@ const FamilyTree = () => {
     }
 
     const getOldestWoman = (listOfPersons) => {
-        return listOfPersons.find(l => l.gender === 'Femenino')
+        return listOfPersons.find(l => l.gender === 'Femenino' && l.country === 'IT')
     }
 
     const findOffSpring = (person, listOfPersons) => {
@@ -94,13 +96,13 @@ const FamilyTree = () => {
         const oldestWoman = getOldestWoman(sortedListOfPersons);
 
         if(!oldestWoman){
-            throw new Error('No hay ninguna mujer en el árbol');
+            return toast.error('No hay ninguna mujer italiana en el árbol');
         }
 
         const offSpringsOfOldestWoman = findOffSpring(oldestWoman, sortedListOfPersons);
 
         if(offSpringsOfOldestWoman.length === 0 ){
-            throw new Error('No hay hijos de la mujer más vieja');
+            return toast.error('No hay hijos de la mujer más vieja');
         }
 
         const offSpringOfOldestWomanAfter1948 = getOffSpringAfter1948(oldestWoman, offSpringsOfOldestWoman);
@@ -119,11 +121,15 @@ const FamilyTree = () => {
             return;
         }
 
-        throw new Error('No hay hijos de la mujer más vieja');
+        return toast.error('No hay hijos de la mujer más vieja');
     }
 
-    const isLastStep = listOfPersons.length === 4;
+    const isLastStep = listOfPersons.length === 5;
     const isNotFirstStep = listOfPersons.length !== 0;
+
+    const reversePersonList = [...listOfPersons].reverse();
+
+    const isThereAnyItalian = Boolean(listOfPersons.find(x => x.country === 'IT'));
 
     return (
         <Box sx={{ mt: 1 }}>
@@ -196,7 +202,7 @@ const FamilyTree = () => {
                         </ConditionalRender>
                         <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
                             {
-                                listOfPersons.map((person, index) => (
+                                reversePersonList.map((person, index) => (
                                     <Box key={person.id} sx={{ width: '358px' }}>
                                         <PersonItem person={person} status={checkStatus.status} offSpringOfOldestWoman={checkStatus.offSpringOfOldestWoman} handleEdit={() => handleEditionOpen(person)}/>
                                         { index !== listOfPersons.length - 1 &&
@@ -211,7 +217,7 @@ const FamilyTree = () => {
                     </Box>
                     <ConditionalRender conditional={listOfPersons.length > 0}>
                         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-                            <Button variant="contained" disabled={listOfPersons.length !== 4} onClick={handleCheck} type="button">Comprobar</Button>
+                            <Button variant="contained" disabled={listOfPersons.length < 4 || !isThereAnyItalian} onClick={handleCheck} type="button">Comprobar</Button>
                         </Box>
                     </ConditionalRender>
                 </Box>

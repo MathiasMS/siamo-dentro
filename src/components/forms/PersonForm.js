@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, DialogActions, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, DialogActions, Grid, ListSubheader, MenuItem, useMediaQuery, useTheme } from '@mui/material';
 import TextFormField from '../formFields/TextFormField';
 import SelectFormField from '../formFields/SelectFormField';
-import countryOptions from '../../datasets/countries';
+import { principalCountries, otherCountries } from '../../datasets/countries';
 import genderOptions from '../../datasets/genders';
+import React from 'react';
 
 const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
     const materialTheme = useTheme();
@@ -59,7 +60,10 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
                         label="Pais*"
                         errors={errors.country}
                         margin="dense"
-                        options={countryOptions}
+                        principalOptionsLabel="Sugerencias"
+                        principalOptions={principalCountries}
+                        secondaryOptionsLabel="Todos los países"
+                        secondaryOptions={otherCountries}
                     />
                 </Grid>
             </Grid>
@@ -79,10 +83,9 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
                         name="gender"
                         control={control}
                         label="Genero*"
-
                         errors={errors.gender}
                         margin="dense"
-                        options={genderOptions}
+                        principalOptions={genderOptions}
                     />
                 </Grid>
             </Grid>

@@ -7,6 +7,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import FamilyTree from './pages/FamilyTree';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const createdTheme = createTheme({
   palette: {
@@ -20,6 +22,14 @@ const App = () => {
   return (
       <ThemeProvider theme={createdTheme}>
        <FamilyTree />
+       <ToastContainer
+           position="top-right"
+           autoClose={5000}
+           hideProgressBar={false}
+           newestOnTop={false}
+           closeOnClick
+           theme="colored"
+       />
       </ThemeProvider>
   )
 }

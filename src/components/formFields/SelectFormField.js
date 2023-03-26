@@ -7,19 +7,23 @@ import {
     InputLabel,
     Select,
     MenuItem,
-    FormHelperText,
+    FormHelperText, ListSubheader,
 } from '@mui/material';
 
 const SelectFormField = ({
     name,
     label,
     control,
-    options,
+    principalOptions,
+    secondaryOptions,
+    principalOptionsLabel,
+    secondaryOptionsLabel,
     multiple,
     errors,
     margin = 'normal',
     required,
 }) => {
+
     return (
         <Controller
             name={name}
@@ -40,11 +44,22 @@ const SelectFormField = ({
                         multiple={multiple}
                         fullWidth
                     >
-                        {options.map((o) => (
-                            <MenuItem key={o.value} value={o.value}>
-                                {o.label}
-                            </MenuItem>
-                        ))}
+                        { principalOptionsLabel && <ListSubheader sx={{ fontWeight: 'bold'}}>{principalOptionsLabel}</ListSubheader>}
+                        {
+                            principalOptions.map((o) => (
+                                <MenuItem key={o.value} value={o.value}>
+                                    {o.label}
+                                </MenuItem>
+                            ))
+                        }
+                        { secondaryOptionsLabel && <ListSubheader sx={{ fontWeight: 'bold'}}>{secondaryOptionsLabel}</ListSubheader>}
+                        {
+                            secondaryOptions ? secondaryOptions.map((o) => (
+                                <MenuItem key={o.value} value={o.value}>
+                                    {o.label}
+                                </MenuItem>
+                            )) : null
+                        }
                     </Select>
                     <FormHelperText error={Boolean(errors)}>{errors?.message}</FormHelperText>
                 </FormControl>
