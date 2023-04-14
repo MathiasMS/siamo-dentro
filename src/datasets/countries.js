@@ -149,7 +149,7 @@ const countries = [
     },
     {
         "value": "CD",
-        "label": "Congo"
+        "label": "Congo (CD)"
     },
     {
         "value": "CF",
@@ -157,7 +157,7 @@ const countries = [
     },
     {
         "value": "CG",
-        "label": "Congo"
+        "label": "Congo (CG)"
     },
     {
         "value": "CH",

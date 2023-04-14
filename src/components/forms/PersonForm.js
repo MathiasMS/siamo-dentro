@@ -7,11 +7,13 @@ import SelectFormField from '../formFields/SelectFormField';
 import { principalCountries, otherCountries } from '../../datasets/countries';
 import genderOptions from '../../datasets/genders';
 import React from 'react';
+import AutocompleteFormField from '../formFields/AutocompleteFormField';
 
 const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
     const materialTheme = useTheme();
     const matchDownSM = useMediaQuery(materialTheme.breakpoints.down('sm'));
 
+    const options = [...principalCountries, ...otherCountries];
     const validationSchema = Yup.object().shape({
         name: Yup.string().max(255).required('Nombre es requerido.'),
         year: Yup.number().typeError('Numero positivo.').required('Año es requerido.'),
@@ -42,7 +44,7 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
             <input type="hidden" name="id" />
             <input type="hidden" name="kindOfRelationShip" />
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                     <TextFormField
                         name="name"
                         sx={{ mt: '20px'}}
@@ -52,23 +54,32 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
                         margin="dense"
                     />
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ mt: matchDownSM ? 0 : '12px'}}>
-                    <SelectFormField
+                <Grid item xs={12}>
+                    <AutocompleteFormField
                         name="country"
                         sx={{ mt: '12px'}}
                         control={control}
                         label="Pais*"
                         errors={errors.country}
                         margin="dense"
-                        principalOptionsLabel="Sugerencias"
-                        principalOptions={principalCountries}
-                        secondaryOptionsLabel="Todos los países"
-                        secondaryOptions={otherCountries}
+                        options={options}
                     />
+                    {/*<SelectFormField*/}
+                    {/*    name="country"*/}
+                    {/*    sx={{ mt: '12px'}}*/}
+                    {/*    control={control}*/}
+                    {/*    label="Pais*"*/}
+                    {/*    errors={errors.country}*/}
+                    {/*    margin="dense"*/}
+                    {/*    principalOptionsLabel="Sugerencias"*/}
+                    {/*    principalOptions={principalCountries}*/}
+                    {/*    secondaryOptionsLabel="Todos los países"*/}
+                    {/*    secondaryOptions={otherCountries}*/}
+                    {/*/>*/}
                 </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ mt: matchDownSM ? 1 :  0 }}>
-                <Grid item xs={12} md={6}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
                     <TextFormField
                         name="year"
                         sx={{ mt: '20px'}}
@@ -78,7 +89,7 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
                         margin="dense"
                     />
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ mt: matchDownSM ? 0 : '12px'}}>
+                <Grid item xs={12}>
                     <SelectFormField
                         name="gender"
                         control={control}
