@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Autocomplete, FormControl, FormHelperText, InputLabel, TextField } from '@mui/material';
+import { Autocomplete, FormControl, TextField } from '@mui/material';
 
 const AutocompleteFormField = ({
     name,

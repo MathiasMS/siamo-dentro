@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, DialogActions, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Button, DialogActions, Grid } from '@mui/material';
 import TextFormField from '../formFields/TextFormField';
 import SelectFormField from '../formFields/SelectFormField';
 import { principalCountries, otherCountries } from '../../datasets/countries';
@@ -10,8 +10,6 @@ import React from 'react';
 import AutocompleteFormField from '../formFields/AutocompleteFormField';
 
 const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
-    const materialTheme = useTheme();
-    const matchDownSM = useMediaQuery(materialTheme.breakpoints.down('sm'));
 
     const options = [...principalCountries, ...otherCountries];
     const validationSchema = Yup.object().shape({
@@ -64,18 +62,6 @@ const PersonForm = ({ defaultValues, onSubmit, handleClose }) => {
                         margin="dense"
                         options={options}
                     />
-                    {/*<SelectFormField*/}
-                    {/*    name="country"*/}
-                    {/*    sx={{ mt: '12px'}}*/}
-                    {/*    control={control}*/}
-                    {/*    label="Pais*"*/}
-                    {/*    errors={errors.country}*/}
-                    {/*    margin="dense"*/}
-                    {/*    principalOptionsLabel="Sugerencias"*/}
-                    {/*    principalOptions={principalCountries}*/}
-                    {/*    secondaryOptionsLabel="Todos los países"*/}
-                    {/*    secondaryOptions={otherCountries}*/}
-                    {/*/>*/}
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
